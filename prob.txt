@@ -1,0 +1,6 @@
+Given a BST, find the k-th smallest element.
+
+
+* BST: Binary search tree - a tree containing a set of values where the
+right node is a BST where all values are bigger than current, 
+and the left node is a BST where all values are smaller than current
