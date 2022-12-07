@@ -12,6 +12,15 @@ public class sol {
             System.out.println(k + "-th smallest element: " + x);
     }
 
+    private static int findSmallestAtK(BiNode<Integer> bst, int k) {
+        int tmp = bst.getLeft().count();
+        if(k - 1 == tmp)
+            return bst.getValue();
+        if(k - 1 < tmp)
+            return findSmallestAtK(bst.getRight(), k - 1 - tmp);
+        return findSmallestAtK(bst.getLeft(), k);
+    }
+
     private static int KthSmallestElement(BiNode<Integer> bst, int k) {
         // Sol: Walk left K steps, reducing K by 1.
         // When stepping right, add 1 and then keep going left K+1 steps

@@ -48,6 +48,17 @@ public class BiNode<T> {
         return 1 + Math.max(this.right.getDepth(), this.left.getDepth());
     }
 
+    
+    public int count()
+    {
+        int c = 1;
+        if (this.right != null)
+            c += this.right.count();
+        if (this.left != null)
+            c += this.left.count();
+        return c;
+    }
+
     public boolean isAnagramOf(BiNode<T> other)
     {
         // If the values are not equal, return false.
