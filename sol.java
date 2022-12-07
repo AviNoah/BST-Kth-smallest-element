@@ -1,48 +1,39 @@
 public class sol {
     public static void main(String[] args) {
-        BiNode<Integer> bst = new BiNode<>(2);
+        BiNode<Integer> bst = new BiNode<>(2), b1 = new BiNode<Integer>(4);
         bst.setLeft(new BiNode<Integer>(1));
-        bst.setRight(new BiNode<Integer>(3));
-        int k = 1;
-        int x = KthSmallestElement(bst, k);
-        System.out.println(bst);
-        if (x == -1)
-            System.out.println("none found");
-        else
-            System.out.println(k + "-th smallest element: " + x);
+        bst.setRight(b1);
+        b1.setLeft(new BiNode<Integer>(3));
+        b1.setRight(new BiNode<Integer>(5));
+
+        for (int i = 0; i < args.length; i++) {
+            int x = findSmallestAtK(bst, i);
+            System.out.println(bst);
+            if (x == -1)
+                System.out.println("none found");
+            else
+                System.out.println(i + "-th smallest element: " + x);
+        }
     }
 
     private static int findSmallestAtK(BiNode<Integer> bst, int k) {
-        int tmp = bst.getLeft().count();
-        if(k - 1 == tmp)
-            return bst.getValue();
-        if(k - 1 < tmp)
-            return findSmallestAtK(bst.getRight(), k - 1 - tmp);
-        return findSmallestAtK(bst.getLeft(), k);
-    }
+        // K starts counting at 1 instead of 0, we have to subtract 1 from it.
+        if (bst == null)
+            return -1; // If given root is null, return -1.
 
-    private static int KthSmallestElement(BiNode<Integer> bst, int k) {
-        // Sol: Walk left K steps, reducing K by 1.
-        // When stepping right, add 1 and then keep going left K+1 steps
-        // When there is no right, default to -1.
-
-        if (k == 1) {
-            if (bst.getLeft() == null)
-                return bst.getValue(); // this is the smallest one.
-            // bst has a left, there is a smaller element.
-            return KthSmallestElement(bst.getLeft(), k);
-        }
-
-        // k is bigger than 1.
-
+        int leftCount = 0; // Assume there are zero nodes to its left
         if (bst.getLeft() != null)
-            return KthSmallestElement(bst.getLeft(), k + 1);
-
-        if (bst.getRight() != null) {
-            return KthSmallestElement(bst.getRight(), k - 1); // Attempt right side.
+            leftCount = bst.getLeft().count();
+        if (k - 1 == leftCount)
+            return bst.getValue();
+        if (k - 1 < leftCount) {
+            if (bst.getLeft() == null)
+                return -1; // overshot
+            return findSmallestAtK(bst.getLeft(), k);
         }
+        if (bst.getRight() == null)
+            return -1; // overshot
+        return findSmallestAtK(bst.getRight(), k - 1 - leftCount);
 
-        return -1; // No possible way to find.
     }
-
 }
