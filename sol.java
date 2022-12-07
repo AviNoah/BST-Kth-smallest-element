@@ -6,9 +6,9 @@ public class sol {
         b1.setLeft(new BiNode<Integer>(3));
         b1.setRight(new BiNode<Integer>(5));
 
-        for (int i = 0; i < args.length; i++) {
+        System.out.println(bst);
+        for (int i = 1; i < 10; i++) {
             int x = findSmallestAtK(bst, i);
-            System.out.println(bst);
             if (x == -1)
                 System.out.println("none found");
             else
